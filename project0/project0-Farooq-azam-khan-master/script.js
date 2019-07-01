@@ -10,6 +10,7 @@ const list = document.getElementById('todo-list');
 const itemCountSpan = document.getElementById('item-count')
 const uncheckedCountSpan = document.getElementById('unchecked-count')
 
+
 function newTodo() {
   const text = document.getElementById('todo-content').value;
   if (!text) {
@@ -18,7 +19,7 @@ function newTodo() {
   }
   document.getElementById('error').innerHTML = '';
   // increment todo count and uncheck count 
-  itemCountSpan.innerHTML = parseInt(itemCountSpan.innerHTML) + 1;
+  incrementItemCount();
   uncheckedCountSpan.innerHTML = parseInt(uncheckedCountSpan.innerHTML) + 1;
 
   // each todo root div 
@@ -27,24 +28,11 @@ function newTodo() {
 
 
   // checkbox 
-  const newCheck = document.createElement('input');
-  newCheck.type = 'checkbox';
-  newCheck.className = 'checkInput';
-  newCheck.id = `check-${itemCountSpan.innerHTML}`;
-  newCheck.checked = false;
-
-
+  const newCheck = createCheckElement();
   // delete button 
-  const newDelete = document.createElement('button');
-  newDelete.innerHTML = 'delete';
-  newDelete.id = `delete-${itemCountSpan.innerHTML}`;
-  newDelete.className = 'delete';
-
+  const newDelete = createDeleteElement();
   // li element 
-  const newLi = document.createElement('li');
-
-  newLi.innerHTML = text;
-  newLi.id = `li-${itemCountSpan.innerHTML}`;
+  const newLi = createLiElement();
 
   rootdiv.appendChild(newCheck);
   rootdiv.appendChild(newLi);
@@ -54,35 +42,74 @@ function newTodo() {
 
 }
 
+function createCheckElement() {
+  const newCheck = document.createElement('input');
+  newCheck.type = 'checkbox';
+  newCheck.className = 'checkInput';
+  newCheck.id = `check-${itemCountSpan.innerHTML}`;
+  newCheck.checked = false;
+  return newCheck;
+}
+
+function createLiElement() {
+  const newLi = document.createElement('li');
+  newLi.innerHTML = text;
+  newLi.id = `li-${itemCountSpan.innerHTML}`;
+  return newLi;
+}
+function createDeleteElement() {
+  const deleteElement = document.createElement('button');
+  deleteElement.innerHTML = 'delete';
+  deleteElement.id = `delete-${itemCountSpan.innerHTML}`;
+  deleteElement.className = 'delete';
+  return deleteElement;
+}
+
 window.addEventListener('DOMContentLoaded', function () {
   document.getElementById('addTodo').addEventListener('click', newTodo);
   // check if delete button clicked or check button clicked
   document.addEventListener('click', function (e) {
     if (e.target.className === 'delete') {
       // decrement todo count and uncheck count 
-      itemCountSpan.innerHTML = parseInt(itemCountSpan.innerHTML) - 1;
-      let check_id = `check-${e.target.id.split('-')[1]}`;
+      decrementItemCount();
+      let check_id = `check-${getIdFromElement(e.target)}`;
       if (!document.getElementById(check_id).checked) {
-        uncheckedCountSpan.innerHTML = parseInt(uncheckedCountSpan.innerHTML) - 1;
+        decrementUnchecedCount();
       }
 
-      let div_id = e.target.id.split('-')[1];
-      div_id = `div-${div_id}`;
+      const div_id = `div-${getIdFromElement(e.target)}`;
       const divOfDelete = document.getElementById(div_id);
       list.removeChild(divOfDelete);
     } else if (e.target.className === 'checkInput') {
-      let div_id = e.target.id.split('-')[1];
-      div_id = `div-${div_id}`;
-      const checkedDiv = document.getElementById(div_id);
+      const div_id = `div-${getIdFromElement(e.target)}`;
+      const liElement = document.getElementById(`li-${getIdFromElement(e.target)}`);
       if (event.target.checked) {
-        uncheckedCountSpan.innerHTML = parseInt(uncheckedCountSpan.innerHTML) - 1;
+        decrementUnchecedCount();
         // line through li element
-        document.getElementById(`li-${e.target.id.split('-')[1]}`).className = 'line-through';
+        liElement.className = 'line-through';
         // text-decoration: line-through;
       } else if (!event.target.checked) {
-        uncheckedCountSpan.innerHTML = parseInt(uncheckedCountSpan.innerHTML) + 1;
-        document.getElementById(`li-${e.target.id.split('-')[1]}`).className = '';
+        incrementUnchecedCount();
+        liElement.className = '';
       }
     }
   });
 });
+
+function getIdFromElement(e) {
+  return e.id.split('-')[1];
+}
+
+function incrementUnchecedCount() {
+  uncheckedCountSpan.innerHTML = parseInt(uncheckedCountSpan.innerHTML) + 1;
+}
+function decrementUnchecedCount() {
+  uncheckedCountSpan.innerHTML = parseInt(uncheckedCountSpan.innerHTML) - 1;
+}
+
+function incrementItemCount() {
+  itemCountSpan.innerHTML = parseInt(itemCountSpan.innerHTML) + 1;
+}
+function decrementItemCount() {
+  itemCountSpan.innerHTML = parseInt(itemCountSpan.innerHTML) - 1;
+}
