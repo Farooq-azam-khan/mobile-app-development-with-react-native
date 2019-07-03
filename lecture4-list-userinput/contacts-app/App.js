@@ -23,14 +23,12 @@ export default class App extends React.Component {
     this.setState(prevState => ({ showContacts: !prevState.showContacts }));
   }
 
+
   sort = () => {
-    console.log('sorting')
-    return this.setState(prevState => ({
-      contacts: [...prevState.contacts].sort(compareNames)
-    }));
+    this.setState(prevState => ({ contacts: prevState.contacts.sort(compareNames) }))
   }
 
-  renderItem = obj => <Row {...(obj.item)} />
+  renderItem = ({ item }) => (<Row {...item} />)
 
   render() {
     return (
@@ -43,7 +41,7 @@ export default class App extends React.Component {
           <FlatList
             data={this.state.contacts}
             renderItem={this.renderItem}
-            keyExtractor={(item, index) => index.toString()} />
+            keyExtractor={(item, _) => item.key.toString()} />
         )
         }
       </View>
