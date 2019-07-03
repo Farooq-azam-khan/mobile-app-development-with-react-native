@@ -22,18 +22,29 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (
-      <View style={[styles.container, styles.paddingTop]}>
-        <Button title="toggle contacts" onPress={this.toggleContacts} />
-        <ScrollView>
-          {contacts.map(contact => (
-            // <Row key={contact.key} phone={contact.phone} name={contact.name} />
-            <Row key={contact.key} {...contact} />
-          ))}
-        </ScrollView>
-      </View>
+    if (this.state.showContacts) {
+      return (
+        <View style={[styles.container, styles.paddingTop]}>
+          <Button title="toggle contacts" onPress={this.toggleContacts} />
+          <ScrollView>
+            {contacts.map(contact => (
+              // <Row key={contact.key} phone={contact.phone} name={contact.name} />
+              <Row key={contact.key} {...contact} />
+            ))}
+          </ScrollView>
+        </View>
 
-    );
+      );
+    } else {
+      return (
+        <View style={[styles.container, styles.paddingTop]}>
+          <Button title="toggle contacts" onPress={this.toggleContacts} />
+
+        </View>
+
+      );
+    }
+
   }
 }
 
