@@ -26,13 +26,13 @@ export default class App extends React.Component {
       <View style={[styles.container, styles.paddingTop]}>
         <Button title="toggle contacts" onPress={this.toggleContacts} />
         {/* turnuary operation */}
-        {this.state.showContacts ? (
+        {this.state.showContacts && (
           <ScrollView>
             {contacts.map(contact => (
               // <Row key={contact.key} phone={contact.phone} name={contact.name} />
               <Row key={contact.key} {...contact} />
             ))}
-          </ScrollView>) : null
+          </ScrollView>)
         }
       </View>
 
