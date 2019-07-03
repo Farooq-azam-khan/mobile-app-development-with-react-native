@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ScrollView, StyleSheet, FlatList, View } from 'react-native';
+import { Button, Text, StyleSheet, SectionList, View } from 'react-native';
 
 import contacts, { compareNames } from './contacts';
 
@@ -30,6 +30,9 @@ export default class App extends React.Component {
 
   renderItem = ({ item }) => (<Row {...item} />)
 
+  // title field matches to title below
+  renderSectionHeader = obj => <Text>{obj.section.title}</Text>
+
   render() {
     return (
       <View style={[styles.container, styles.topPadding]}>
@@ -37,11 +40,17 @@ export default class App extends React.Component {
         <Button title="sort contacts" onPress={this.sort} />
         {/* turnuary operation */}
         {this.state.showContacts && (
-          // Flatlist: Pass an array of data and renderItem function as props
-          <FlatList
-            data={this.state.contacts}
+          // SectionList: has its own data array, can override the renderItem function with own custom render
+          // render section header as well 
+          <SectionList
+            renderSectionHeader={this.renderSectionHeader}
+            sections={[{
+              title: 'A',
+              data: this.state.contacts
+            }
+            ]}
             renderItem={this.renderItem}
-            keyExtractor={(item, _) => item.key.toString()} />
+          />
         )
         }
       </View>
