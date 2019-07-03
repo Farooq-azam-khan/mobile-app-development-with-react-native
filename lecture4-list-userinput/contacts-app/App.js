@@ -4,6 +4,8 @@ import { Button, StyleSheet, View } from 'react-native';
 import contacts, { compareNames } from './contacts';
 
 import ContactsList from './ContactsList'
+import AddContactForm from './AddContactForm';
+
 
 export default class App extends React.Component {
   /*
@@ -14,12 +16,17 @@ export default class App extends React.Component {
   */
   state = {
     showContacts: false,
-    contacts: contacts
+    contacts: contacts,
+    showForm: false
+
   }
 
   toggleContacts = () => {
     // this.setState({ showContacts: !this.state.showContacts })
     this.setState(prevState => ({ showContacts: !prevState.showContacts }));
+  }
+  toggleForm = () => {
+    this.setState(prevState => ({ showForm: !prevState.showForm }))
   }
 
 
@@ -29,10 +36,12 @@ export default class App extends React.Component {
 
 
   render() {
+    if (this.state.showForm) return <AddContactForm addContact={() => { return 1; }} />
     return (
       <View style={[styles.container, styles.topPadding]}>
         <Button title="toggle contacts" onPress={this.toggleContacts} />
         <Button title="sort contacts" onPress={this.sort} />
+        <Button title="Add Contact" onPress={this.toggleForm} />
         {this.state.showContacts && (
           <ContactsList
             contacts={this.state.contacts} />
