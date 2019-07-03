@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, ScrollView, StyleSheet, FlatList, View } from 'react-native';
 
-import contacts from './contacts';
+import contacts, { compareNames } from './contacts';
 
 import Row from './Row';
 
@@ -14,6 +14,7 @@ export default class App extends React.Component {
   */
   state = {
     showContacts: false,
+    contacts: contacts
   }
 
   toggleContacts = () => {
@@ -21,16 +22,25 @@ export default class App extends React.Component {
     this.setState(prevState => ({ showContacts: !prevState.showContacts }));
   }
 
+  sort = () => {
+    this.setState(prevState => ({ contacts: prevState.contacts.sort(compareNames) }));
+  }
+
+  renderItem = obj => <Row {...(obj.item)} />
+
   render() {
     return (
       <View style={[styles.container, styles.paddingTop]}>
         <Button title="toggle contacts" onPress={this.toggleContacts} />
+        <Button title="sort contacts" onPress={this.sort} />
         {/* turnuary operation */}
         {this.state.showContacts && (
           // Flatlist: Pass an array of data and renderItem function as props
           <FlatList
             data={contacts}
-            renderItem={obj => <Row {...obj.item} />} />)
+            renderItem={this.renderItem}
+            keyExtractor={(item, index) => index.toString()} />
+        )
         }
       </View>
 
