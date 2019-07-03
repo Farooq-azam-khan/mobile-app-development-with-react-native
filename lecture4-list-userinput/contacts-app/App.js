@@ -4,6 +4,7 @@ import { Button, ScrollView, StyleSheet, FlatList, View } from 'react-native';
 import contacts, { compareNames } from './contacts';
 
 import Row from './Row';
+// import console = require('console');
 
 export default class App extends React.Component {
   /*
@@ -23,21 +24,24 @@ export default class App extends React.Component {
   }
 
   sort = () => {
-    this.setState(prevState => ({ contacts: prevState.contacts.sort(compareNames) }));
+    console.log('sorting')
+    return this.setState(prevState => ({
+      contacts: [...prevState.contacts].sort(compareNames)
+    }));
   }
 
   renderItem = obj => <Row {...(obj.item)} />
 
   render() {
     return (
-      <View style={[styles.container, styles.paddingTop]}>
+      <View style={[styles.container, styles.topPadding]}>
         <Button title="toggle contacts" onPress={this.toggleContacts} />
         <Button title="sort contacts" onPress={this.sort} />
         {/* turnuary operation */}
         {this.state.showContacts && (
           // Flatlist: Pass an array of data and renderItem function as props
           <FlatList
-            data={contacts}
+            data={this.state.contacts}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()} />
         )
