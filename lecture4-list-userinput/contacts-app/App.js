@@ -4,6 +4,13 @@ import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import contacts from './contacts';
 
 
+const Row = props => (
+  <View key={props.key}>
+    <Text>{props.name}</Text>
+    <Text>{props.phone}</Text>
+  </View>
+)
+
 export default class App extends React.Component {
   /*
   constructor(props) {
@@ -25,11 +32,8 @@ export default class App extends React.Component {
       <View style={[styles.container, styles.paddingTop]}>
         <Button title="toggle contacts" onPress={this.toggleContacts} />
         <ScrollView>
-          {contacts.map((contact) => (
-            <View key={contact.key}>
-              <Text>{contact.name}</Text>
-              <Text>{contact.phone}</Text>
-            </View>
+          {contacts.map(contact => (
+            <Row key={contact.key} phone={contact.phone} name={contact.name} />
           ))}
         </ScrollView>
       </View>
