@@ -5,7 +5,8 @@ import contacts from './contacts';
 
 
 const Row = props => (
-  <View key={props.key}>
+  // <View key={props.key}>
+  <View>
     <Text>{props.name}</Text>
     <Text>{props.phone}</Text>
   </View>
@@ -33,7 +34,8 @@ export default class App extends React.Component {
         <Button title="toggle contacts" onPress={this.toggleContacts} />
         <ScrollView>
           {contacts.map(contact => (
-            <Row key={contact.key} phone={contact.phone} name={contact.name} />
+            // <Row key={contact.key} phone={contact.phone} name={contact.name} />
+            <Row key={contact.key} {...contact} />
           ))}
         </ScrollView>
       </View>
