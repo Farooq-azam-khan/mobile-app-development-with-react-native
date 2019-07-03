@@ -29,7 +29,6 @@ export default class App extends React.Component {
         {this.state.showContacts && (
           <ScrollView>
             {contacts.map(contact => (
-              // <Row key={contact.key} phone={contact.phone} name={contact.name} />
               <Row key={contact.key} {...contact} />
             ))}
           </ScrollView>)
