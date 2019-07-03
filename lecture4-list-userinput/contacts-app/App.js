@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, FlatList, View } from 'react-native';
 
 import contacts from './contacts';
 
@@ -27,11 +27,10 @@ export default class App extends React.Component {
         <Button title="toggle contacts" onPress={this.toggleContacts} />
         {/* turnuary operation */}
         {this.state.showContacts && (
-          <ScrollView>
-            {contacts.map(contact => (
-              <Row key={contact.key} {...contact} />
-            ))}
-          </ScrollView>)
+          // Flatlist: Pass an array of data and renderItem function as props
+          <FlatList
+            data={contacts}
+            renderItem={obj => <Row {...obj.item} />} />)
         }
       </View>
 
