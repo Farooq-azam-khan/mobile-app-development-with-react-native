@@ -3,14 +3,7 @@ import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import contacts from './contacts';
 
-
-const Row = props => (
-  // <View key={props.key}>
-  <View>
-    <Text>{props.name}</Text>
-    <Text>{props.phone}</Text>
-  </View>
-)
+import Row from './Row';
 
 export default class App extends React.Component {
   /*
