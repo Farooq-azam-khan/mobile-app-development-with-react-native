@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "contacts app",
-    "slug": "contacts-app",
+    "name": "contacts app - fak",
+    "slug": "contacts-app-fak",
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": [
