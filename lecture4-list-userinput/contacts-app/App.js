@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, Button, StyleSheet, View } from 'react-native';
 
 import contacts, { compareNames } from './contacts';
 
 import ContactsList from './ContactsList'
 import AddContactForm from './AddContactForm';
 
-
+import { Constants } from 'expo'
 
 export default class App extends React.Component {
   /*
@@ -44,7 +44,7 @@ export default class App extends React.Component {
   render() {
     if (this.state.showForm) return <AddContactForm onSubmit={this.addContact} />
     return (
-      <View style={[styles.container, styles.topPadding]}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Button title="toggle contacts" onPress={this.toggleContacts} />
         {/* <Button title="sort contacts" onPress={this.sort} /> */}
         <Button title="Add Contact" onPress={this.toggleForm} />
@@ -53,10 +53,9 @@ export default class App extends React.Component {
             contacts={this.state.contacts} />
         )
         }
-      </View>
+      </KeyboardAvoidingView>
 
     );
-
   }
 }
 
@@ -65,13 +64,17 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f4f4f4',
     alignItems: 'center',
+    paddingTop: Constants.statusBarHeight,
   },
   font: {
     fontSize: 40
   },
-  topPadding: {
-    paddingTop: 40
+  button: {
+    padding: 1,
+    marginTop: 2,
+    marginBottom: 2,
+    backgroundColor: '#aaaaa'
   }
 });
