@@ -9,19 +9,41 @@ export default class AddContactForm extends React.Component {
     }
     state = {
         name: '',
-        phone: ''
+        phone: '',
+        isFormValid: false
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.name !== prevState.name || this.state.phone !== prevState.phone) {
+            this.validateForm();
+        }
+    }
+
     handleNameChange = name => {
-        this.setState({ name: name })
+        // this.setState({ name }, this.validateForm);
+        this.setState({ name });
     }
 
     handlePhoneChange = phone => {
-        this.setState({ phone: phone })
+        // +"abc" will try to cast to number else get NaN
+        if (+phone >= 0 && phone.length <= 10) {
+            // this.setState({ phone }, this.validateForm);
+            this.setState({ phone });
+        }
+    }
+    validateForm = () => {
+        if (this.state.name && +this.state.phone >= 0 && this.state.phone.length === 10 && this.state.name.length >= 3) {
+            this.setState({ isFormValid: true });
+        } else {
+            this.setState({ isFormValid: false });
+        }
     }
     handleSubmit = () => {
         // this.props.onsubmit({name: this.state.name, phone: this.state.phone})
-        // this.props.onsubmit({...this.state})
+        // this.props.onsubmit({...this.state}))
+
         this.props.onSubmit(this.state)
+
     }
 
     render() {
@@ -35,7 +57,7 @@ export default class AddContactForm extends React.Component {
                 value={this.state.phone}
                 onChangeText={this.handlePhoneChange}
                 keyboardType="numeric" />
-            <Button onPress={this.handleSubmit} title="Add Contact" />
+            <Button disabled={!this.state.isFormValid} onPress={this.handleSubmit} title="Add Contact" />
         </View>);
     }
 }
