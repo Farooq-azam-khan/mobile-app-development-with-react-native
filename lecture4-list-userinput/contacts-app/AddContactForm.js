@@ -4,7 +4,8 @@ import propTypes from 'prop-types';
 
 export default class AddContactForm extends React.Component {
     static propTypes = {
-        addContact: propTypes.func
+        // addContact: propTypes.func,
+        onSubmit: propTypes.func
     }
     state = {
         name: '',
@@ -16,6 +17,11 @@ export default class AddContactForm extends React.Component {
 
     handlePhoneChange = phone => {
         this.setState({ phone: phone })
+    }
+    handleSubmit = () => {
+        // this.props.onsubmit({name: this.state.name, phone: this.state.phone})
+        // this.props.onsubmit({...this.state})
+        this.props.onSubmit(this.state)
     }
 
     render() {
@@ -29,7 +35,7 @@ export default class AddContactForm extends React.Component {
                 value={this.state.phone}
                 onChangeText={this.handlePhoneChange}
                 keyboardType="numeric" />
-            <Button onPress={() => { return 1; }} title="Add Contact" />
+            <Button onPress={this.handleSubmit} title="Add Contact" />
         </View>);
     }
 }
