@@ -1,16 +1,18 @@
 import React from 'react';
 import { View } from 'react-native';
-import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
 import contacts from './contacts';
 
 // screens
 import AddContactScreen from './screens/AddContactScreen';
 import ContactListScreen from './screens/ContactListScreen';
+import ContactDetailsScreen from './screens/ContactDetailsScreen';
 
-const AppNavigator = createSwitchNavigator({
+const AppNavigator = createStackNavigator({
   AddContact: AddContactScreen,
-  ContactList: ContactListScreen
+  ContactList: ContactListScreen,
+  ContactDetails: ContactDetailsScreen,
 }, {
     initialRouteName: 'ContactList'
   }

@@ -5,10 +5,16 @@ import ContactsList from '../ContactsList';
 import { compareNames } from '../contacts';
 
 export default class ContactListScreen extends React.Component {
-    state = {
-        showContacts: false,
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerTitle: "Contacts",
+            headerRight: <Button title="Add Contact" onPress={() => navigation.navigate('AddContact')} />
+        }
     }
 
+    state = {
+        showContacts: true,
+    }
 
     sort = () => {
         this.setState(prevState => ({ contacts: prevState.contacts.sort(compareNames) }))
@@ -21,13 +27,21 @@ export default class ContactListScreen extends React.Component {
         this.props.navigation.navigate('AddContact');
     }
 
+    handleSelectContact = (contact) => {
+        this.props.navigation.navigate('ContactDetails', contact);
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <Button title="Toggle Contacts" onPress={this.toggleContacts} />
-                <Button title="Toggle Form" onPress={this.showForm} />
-                {console.log(this.props.screenProps.contacts)}
-                {this.state.showContacts && <ContactsList contacts={this.props.screenProps.contacts} />}
+                {/* <Button title="Toggle Contacts" onPress={this.toggleContacts} /> */}
+                {/* <Button title="Toggle Form" onPress={this.showForm} /> */}
+                {/* {this.state.showContacts &&  <ContactsList contacts={this.props.screenProsp.contacts}}}*/}
+                <ContactsList
+                    onSelectContact={this.handleSelectContact}
+                    // onSelectContact={(contact) => this.props.navigation.navigate('ContactDetails')}
+                    contacts={this.props.screenProps.contacts}
+                />
 
             </View>
         );
