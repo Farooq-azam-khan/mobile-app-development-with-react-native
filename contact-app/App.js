@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   createSwitchNavigator,
@@ -49,6 +50,8 @@ const AppNavigator = createSwitchNavigator({
 }, {
     initialRouteName: 'Login'
   })
+
+
 const AppContainer = createAppContainer(AppNavigator);
 
 export default class App extends React.Component {
@@ -73,5 +76,4 @@ export default class App extends React.Component {
     );
   }
 }
-
 

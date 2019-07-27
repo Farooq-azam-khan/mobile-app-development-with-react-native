@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class SettingsScreen extends React.Component {
@@ -15,12 +15,23 @@ export default class SettingsScreen extends React.Component {
     }
     render() {
         return (
-            <View>
-                <Text>Settings</Text>
-                <Text styles={{ textAlign: 'center', fontSize: 100, justifyContent: 'center' }}>
+            <View style={styles.container}>
+                <Text style={styles.paragraph}>Settings</Text>
+                <Text style={styles.paragraph}>
                     Coming Soon
                 </Text>
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    paragraph: {
+        textAlign: 'center',
+        fontSize: 50,
+    }
+})
