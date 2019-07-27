@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, Button, StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
 import contacts, { compareNames } from './contacts';
 
@@ -9,12 +9,6 @@ import AddContactForm from './AddContactForm';
 import { Constants } from 'expo'
 
 export default class App extends React.Component {
-  /*
-  constructor(props) {
-    super(props); 
-    this.state = { showContacts: false }
-  }
-  */
   state = {
     showContacts: false,
     contacts: contacts,
@@ -23,7 +17,6 @@ export default class App extends React.Component {
   }
 
   toggleContacts = () => {
-    // this.setState({ showContacts: !this.state.showContacts })
     this.setState(prevState => ({ showContacts: !prevState.showContacts }));
   }
   toggleForm = () => {
@@ -46,7 +39,6 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Button title="toggle contacts" onPress={this.toggleContacts} />
-        {/* <Button title="sort contacts" onPress={this.sort} /> */}
         <Button title="Add Contact" onPress={this.toggleForm} />
         {this.state.showContacts && (
           <ContactsList

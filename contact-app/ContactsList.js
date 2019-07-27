@@ -3,11 +3,8 @@ import { SectionList, Text } from 'react-native';
 import Row from './Row';
 import PropTypes from 'prop-types';
 
-// SectionList: has its own data array, can override the renderItem function with own custom render
-// render section header as well 
 const renderItem = ({ item }) => (<Row {...item} />)
 
-// title field matches to title below
 const renderSectionHeader = obj => <Text>{obj.section.title}</Text>
 
 const ContactsList = props => {
