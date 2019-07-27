@@ -1,31 +1,27 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 
-import contacts, { compareNames } from './contacts';
+import contacts from './contacts';
 
-import ContactsList from './ContactsList'
-import AddContactForm from './AddContactForm';
+// screens
+import AddContactScreen from './screens/AddContactScreen';
+import ContactListScreen from './screens/ContactListScreen';
 
-import { Constants } from 'expo'
+const AppNavigator = createSwitchNavigator({
+  AddContact: AddContactScreen,
+  ContactList: ContactListScreen
+}, {
+    initialRouteName: 'ContactList'
+  }
+)
+const AppContainer = createAppContainer(AppNavigator);
+
+
 
 export default class App extends React.Component {
   state = {
-    showContacts: false,
-    contacts: contacts,
-    showForm: false
-
-  }
-
-  toggleContacts = () => {
-    this.setState(prevState => ({ showContacts: !prevState.showContacts }));
-  }
-  toggleForm = () => {
-    this.setState(prevState => ({ showForm: !prevState.showForm }))
-  }
-
-
-  sort = () => {
-    this.setState(prevState => ({ contacts: prevState.contacts.sort(compareNames) }))
+    contacts: contacts
   }
 
   addContact = newContact => {
@@ -33,40 +29,9 @@ export default class App extends React.Component {
     this.setState(prevState => ({ showForm: false, contacts: [...prevState.contacts, newContact] }))
   }
 
-
   render() {
-    if (this.state.showForm) return <AddContactForm onSubmit={this.addContact} />
-    return (
-      <View style={styles.container}>
-        <Button title="toggle contacts" onPress={this.toggleContacts} />
-        <Button title="Add Contact" onPress={this.toggleForm} />
-        {this.state.showContacts && (
-          <ContactsList
-            contacts={this.state.contacts} />
-        )
-        }
-      </View>
-
-    );
+    return (<AppContainer screenProps={{ contacts: this.state.contacts, addContact: this.addContact }} />);
   }
 }
 
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f4f4f4',
-    alignItems: 'center',
-    paddingTop: Constants.statusBarHeight,
-  },
-  font: {
-    fontSize: 40
-  },
-  button: {
-    padding: 1,
-    marginTop: 2,
-    marginBottom: 2,
-    backgroundColor: '#aaaaa'
-  }
-});
