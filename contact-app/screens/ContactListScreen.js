@@ -13,7 +13,7 @@ export default class ContactListScreen extends React.Component {
     }
 
     state = {
-        showContacts: true,
+        showContacts: false,
     }
 
     sort = () => {
@@ -28,20 +28,21 @@ export default class ContactListScreen extends React.Component {
     }
 
     handleSelectContact = (contact) => {
+        this.setState({ showContacts: false })
         this.props.navigation.navigate('ContactDetails', contact);
     }
 
     render() {
         return (
             <View style={styles.container}>
-                {/* <Button title="Toggle Contacts" onPress={this.toggleContacts} /> */}
+                <Button title="Toggle Contacts" onPress={this.toggleContacts} />
                 {/* <Button title="Toggle Form" onPress={this.showForm} /> */}
                 {/* {this.state.showContacts &&  <ContactsList contacts={this.props.screenProsp.contacts}}}*/}
-                <ContactsList
+                {this.state.showContacts && <ContactsList
                     onSelectContact={this.handleSelectContact}
                     // onSelectContact={(contact) => this.props.navigation.navigate('ContactDetails')}
                     contacts={this.props.screenProps.contacts}
-                />
+                />}
 
             </View>
         );

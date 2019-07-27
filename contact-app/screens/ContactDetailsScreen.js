@@ -2,6 +2,9 @@ import React from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { Constants } from 'expo';
 export default class ContactDetailsScreen extends React.Component {
+    state = {
+        showText: true
+    }
     static navigationOptions = ({ navigation }) => {
         return {
             headerTitle: `${navigation.getParam('name')}`,
@@ -14,22 +17,26 @@ export default class ContactDetailsScreen extends React.Component {
         return contacts[0];
     }
     handleJump = () => {
-        this.props.navigation.navigate('ContactDetails', this.getRandomContact);
+        this.setState({ showText: false })
+        this.props.navigation.push('ContactDetails', this.getRandomContact());
     }
     render() {
         return (
-            <View style={styles.container}>
-                <Text>
-                    Detail Screen
+
+            this.state.showText && (
+                <View style={styles.container}>
+                    <Text>
+                        Detail Screen
                 </Text>
-                <Text>
-                    {this.props.navigation.getParam('name')}
-                </Text>
-                <Text>
-                    {this.props.navigation.getParam('phone')}
-                </Text>
-                <Button title="Jump to random contact" onPress={this.handleJump} />
-            </View>
+                    <Text>
+                        {this.props.navigation.getParam('name')}
+                    </Text>
+                    <Text>
+                        {this.props.navigation.getParam('phone')}
+                    </Text>
+                    <Button title="Jump to random contact" onPress={this.handleJump} />
+                </View>
+            )
         );
     }
 }
