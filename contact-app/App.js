@@ -1,5 +1,6 @@
 import React from 'react';
-import { View } from 'react-native'
+// import { View } from 'react-native'
+import { fetchUsers } from './api'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   createSwitchNavigator,
@@ -56,8 +57,25 @@ const AppContainer = createAppContainer(AppNavigator);
 
 export default class App extends React.Component {
   state = {
-    contacts
+    contacts: null
   }
+  componentDidMount() {
+    this.getUsers();
+    // fetchUsers()
+    // .then(contacts => this.setState({ contacts }));
+  }
+  getUsers = async () => {
+    const results = await fetchUsers();
+    this.setState({ contacts: results })
+  }
+  // fetchUsers = async () => {
+  //   const resp = await fetch('https://randomuser.me/api/?nat=us,gb,ca&results=100');
+  //   const { results } = await resp.json();
+  //   this.setState({ contacts: results });
+  //   // fetch('https://randomuser.me/api/?nat=us,gb,ca&results=100')
+  //   //   .then((response) => response.json())
+  //   //   .then(({ results }) => this.setState({ contacts: results }))
+  // }
 
   addContact = newContact => {
     this.setState(prevState => ({
